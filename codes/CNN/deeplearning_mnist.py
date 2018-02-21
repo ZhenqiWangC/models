@@ -100,9 +100,19 @@ dropout -> fully connected by w_fc2 +b_fc2 of 10 units -> Softmax -> output
 W_conv1 = weight_variable([5, 5, 1, 32])
 b_conv1 = bias_variable([32])
 """
-The first layer is a convolution, followed by max pooling. 
-The convolution computes 32 features for each 5x5 patch. 
-Its weight tensor has a shape of [5, 5, 1, 32]. 
+The first layer is a convolution layer. It computes 32 features for each 5x5 patch， its weight tensor has a shape of [5, 5, 1, 32]. 
+(n,28,28,1) => (n, 28, 28, 32)
+The second layer is a pooling layer using max pooling for subsampling.
+(n, 28, 28, 32) => (n, 14, 14, 32)
+The third layer is a convolution layer. It computes 64 features for each 5x5x32 patch， its weight tensor has a shape of [5, 5, 32, 64]. 
+(n, 14, 14, 32) => (n, 14, 14, 64)
+The forth layer is a pooling layer using max pooling for subsampling.
+(n, 14, 14, 64) => (n, 7, 7, 64)
+The fifth layer is a fully connected layer with ReLU as activation function and dropout to prevent overfitting.
+(n, 7, 7, 32) => (n, 1024)
+The final layer is the output layer, using softmax
+(n, 1024) => (n,10)
+
 The first two dimensions are the patch size 
 the next is the number of input channels (1 means that images are grayscale) (depth = 1)
 and the last is the number of output channels.
